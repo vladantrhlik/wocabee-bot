@@ -4,20 +4,20 @@ Simple python bot for wocabee web app
 <h2>Setup</h2>
 <ol>
   <li>Installation of selenium: https://selenium-python.readthedocs.io/installation.html#drivers</li>
-  <li>Fill in login informations (nick, pwd)</li>
+  <li>In `main.py` change `driver = webdriver.Opera()` to what browser you are using eg. `driver = webdriver.Chrome()`</li>
 </ol>
 
 <hr>
 
-<h2>Usage</h2>
-<ol>
-  <li>select class (1-n)</li>
-  <li>select package (1-n)</li>
-  <li>enter "1" to save words to .txt file</li>
-  <li>restart the script :)</li>
-  <li>repeat 1. and 2.</li>
-  <li>enter "2" and number of words you want to complete</li>
-</ol>
-
-
+## Usage
+1. Run `ui.py`
+1. Fill username
+1. Fill password
+1. Click (you must click) `Login`
+1. Select a class and click `Choose`
+1. Select a balík
+1. Select if you want to train or work
+  1. If you select work select how many words do you want to do (max is 99)
+1. Click `Go`
+1. Rerun the bot
 
