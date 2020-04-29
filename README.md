@@ -15,7 +15,6 @@ Simple python bot for wocabee web app
 1. Select a class and click `Choose`
 1. Select a balík
 1. Select if you want to train or work
-    1. If you select work select how many words do you want to do (max is 99)
    1. If you select work select how many words do you want to do (max is 99)
 1. Click `Go`
 1. Rerun the bot
