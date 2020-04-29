@@ -40,8 +40,7 @@ def loadClasses():
 def loadBaliks():
 	return driver.find_elements_by_class_name("packageTableRow")
 
-def train(baliky,balik,file):
-	baliky[balik].find_elements_by_tag_name('td')[0].find_element_by_tag_name("a").click()#.get_attribute('href')
+def train(baliky,balik,file): #načtení slovíček do .txt souboru
 	slovicka = []
 	preklad = []
 	time.sleep(1)
@@ -57,9 +56,8 @@ def train(baliky,balik,file):
 	f = open(file,"w+")
 	for i in range(len(slovicka)):
 		f.write(f"{slovicka[i]};{preklad[i]}\n")
-	driver.find_element_by_id("backBtn").click()
 
-def translate(word,file):
+def translate(word,file): #přeložení slova z jednoho jazyka do druhého
 	f=open(file, "r")
 	words = f.read()
 	words = words.split("\n")
@@ -71,11 +69,12 @@ def translate(word,file):
 		if(i[0] == word): return i[1]
 		if(i[1] == word): return i[0]
 
-def do_the_hard_stuff(times,file):
+def do_the_hard_stuff(times,file): #řešení úkolů
 	types = ["transcribe","translateWord", "chooseWord", "findPair", "completeWord", "translateFallingWord"]
 	form = driver.find_element_by_id("mainForm")
 	for owo in range(times):
 		type = ""
+		#hledání typu ůkolu podle toho jestli mají style: display: none;, nebo ne
 		for i in types:
 			t = form.find_element_by_id(i)
 			#print(f"type:{i} style: {t.get_attribute('style')}")
@@ -84,16 +83,17 @@ def do_the_hard_stuff(times,file):
 		print(type)
 		t = form.find_element_by_id(type)
 		wait_time = 4
-		if(type == "transcribe"):
+		#řešení jedntlivých ůkolú
+		if(type == "transcribe"): #tts > přeskočení na další
 			driver.find_element_by_id("transcribeSkipBtn").click()
 			wait_time = 0.5
-		elif(type == "translateWord"):
+		elif(type == "translateWord"): #přeložení slova
 			word = t.find_elements_by_class_name("form-group")[1].text
 			word = translate(word, file)
 			answer = t.find_element_by_id("translateWordAnswer")
 			answer.send_keys(word)
 			t.find_element_by_id("translateWordSubmitBtn").click()
-		elif(type == "chooseWord"):
+		elif(type == "chooseWord"): #výbět překladu slova z nabídnutých překladů
 			word = t.find_elements_by_class_name("form-group")[1].text
 			word = translate(word, file)
 			btns = t.find_element_by_id("chooseWords").find_elements_by_tag_name("button")
@@ -101,7 +101,7 @@ def do_the_hard_stuff(times,file):
 				if(word == i.text): 
 					i.click()
 					continue
-		elif(type == "findPair"):
+		elif(type == "findPair"): #nalezení páru mezi dvěma trojicemi slovíček
 			q_words_list = []
 			q_words = t.find_element_by_id("q_words").find_elements_by_tag_name("button")
 			for i in q_words: q_words_list.append(i.text)
@@ -116,7 +116,7 @@ def do_the_hard_stuff(times,file):
 						a_words[i].click()
 						q_words[j].click()
 						continue
-		elif(type == "completeWord"):
+		elif(type == "completeWord"): #doplnění chybějících písmen ve slově
 			word = t.find_elements_by_class_name("form-group")[0].text
 			word = translate(word, file)
 			word_to_complete = t.find_elements_by_class_name("form-group")[1].text
@@ -133,19 +133,51 @@ def do_the_hard_stuff(times,file):
 						b.click()
 						wrote = True
 			#print(i)
-		elif(type == "translateFallingWord"):
+		elif(type == "translateFallingWord"): #padající slovo (v modu x2)
 			word = t.find_element_by_id("tfw_word").text
 			word = translate(word,file)
 			t.find_element_by_id("translateFallingWordAnswer").send_keys(word)
 			t.find_element_by_id("translateFallingWordSubmitBtn").click()
-
+		#vyčkání až se načte trapně pomalý přechod
 		time.sleep(wait_time)
 
-def work(baliky,balik,file):
+def work(baliky,balik,file,how_many_times): #nahánění slovíček
 	baliky[balik].find_elements_by_tag_name('td')[3].find_element_by_tag_name("a").click()
-	how_many_times = int(input("Kolik slovíček chcete vyřešit?: "))
 	do_the_hard_stuff(how_many_times,file)
 	driver.find_element_by_id("backBtn").click()
+
+def work_percent(baliky,balik,file): #dokončit balík, když už program umí slovíčka; (to kde jsou procenta)
+	baliky[balik].find_elements_by_tag_name('td')[3].find_element_by_tag_name("a").click()
+	time.sleep(1)
+	while(int(driver.find_element_by_id("progressValue").text[:-1])<50):
+		do_the_hard_stuff(1,file)
+	time.sleep(5) #fukin upozonění že jsem za 50 procenty
+	while(int(driver.find_element_by_id("progressValue").text[:-1])<100):
+		do_the_hard_stuff(1,file)
+	
+	driver.find_element_by_id("backBtn").click()
+
+def train_balik(baliky,balik,file): #naučit slovíčkaa z balíku (i)
+	baliky[balik].find_elements_by_tag_name('td')[0].find_element_by_tag_name("a").click()#.get_attribute('href')
+	train(baliky,balik,file)
+	driver.find_element_by_id("backBtn").click()
+
+def complete_balik(baliky,balik,file): #dokončit balík včetně naučení slovíček na začátku balíku (neotestováno)
+	baliky[balik].find_elements_by_tag_name('td')[3].find_element_by_tag_name("a").click() #spustit balik
+	driver.find_element_by_id("introRun").click() #next
+	train(baliky, balik, file)
+	time.sleep(1)
+	while(int(driver.find_element_by_id("progressValue").text[:-1])<50):
+		do_the_hard_stuff(1,file)
+	time.sleep(5) #fukin upozonění že jsem za 50 procenty
+	while(int(driver.find_element_by_id("progressValue").text[:-1])<100):
+		do_the_hard_stuff(1,file)
+	
+	driver.find_element_by_id("backBtn").click()
+
+
+
+
 
 	
 
@@ -164,7 +196,7 @@ trida = classes[selected_class-1].text
 classes[selected_class-1].find_element_by_tag_name("button").click()
 line()
 
-#výběr bylíků
+#výběr balíků
 baliky = loadBaliks()
 print("nalezené balíky: ")
 baliky = driver.find_elements_by_class_name("packageTableRow")
@@ -173,7 +205,10 @@ for i in baliky: print(f"{baliky.index(i)+1}  {i.find_elements_by_tag_name('td')
 selected_balik = int(input(f"vyberte balík (1-{len(baliky)}): "))
 balik = baliky[selected_balik-1].find_elements_by_tag_name('td')[0].text
 
-akce = int(input("co si přejete s tímto balíkem udělat? (1=procvičit(vytvořit txt), 2=vypracovat): "))
+akce = int(input("co si přejete s tímto balíkem udělat? (1=procvičit(vytvořit txt), 2=nahnat body, 3=vypracovat(%)): "))
 #zapsání slovíček do txt souboru
-if(akce == 1): train(baliky,selected_balik-1, f"{balik}.txt")
-elif (akce == 2): work(baliky, selected_balik-1, f"{balik}.txt")
+if(akce == 1): train_balik(baliky,selected_balik-1, f"{balik}.txt")
+elif (akce == 2): 
+	how_many_times = int(input("Kolik slovíček chcete vyřešit?: "))
+	work(baliky, selected_balik-1, f"{balik}.txt",how_many_times)
+elif (akce == 3): work_percent(baliky, selected_balik-1, f"{balik}.txt")
