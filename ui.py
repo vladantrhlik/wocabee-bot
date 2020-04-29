@@ -119,7 +119,7 @@ class Ui_MainWindow(object):
                     self.baliks = loadBaliks()
                     self.chooseClassBox.clear()
                     self.chooseClassBox.addItems([i.find_elements_by_tag_name('td')[0].text for i in self.baliks])
-                    self.chooseClassLabel.setText("Choose Balík")
+                    self.chooseClassLabel.setText("Choose balík")
 
     def doIt(self):
         if self.loggedIn and self.choosingBaliks:
