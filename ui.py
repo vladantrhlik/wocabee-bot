@@ -5,7 +5,7 @@
 # Created by: PyQt5 UI code generator 5.14.2
 #
 # WARNING! All changes made in this file will be lost!
-from main import login, loadClasses, loadBaliks, train, work
+from main import login, loadClasses, loadBaliks, train_balik, work
 import time
 
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -66,15 +66,18 @@ class Ui_MainWindow(object):
         self.workButton = QtWidgets.QRadioButton(self.centralwidget)
         self.workButton.setGeometry(QtCore.QRect(130, 310, 82, 17))
         self.workButton.setObjectName("workButton")
+        self.trainPercentButton = QtWidgets.QRadioButton(self.centralwidget)
+        self.trainPercentButton.setGeometry(QtCore.QRect(89, 330, 82, 17))
+        self.trainPercentButton.setObjectName("trainPercentButton")
         self.goButton = QtWidgets.QPushButton(self.centralwidget)
-        self.goButton.setGeometry(QtCore.QRect(70, 340, 75, 23))
+        self.goButton.setGeometry(QtCore.QRect(70, 350, 75, 23))
         self.goButton.setObjectName("goButton")
         self.numOfWords = QtWidgets.QSpinBox(self.centralwidget)
-        self.numOfWords.setObjectName(u"numOfWords")
+        self.numOfWords.setObjectName("numOfWords")
         self.numOfWords.setGeometry(QtCore.QRect(200, 260, 42, 22))
         self.numOfWords.setMinimum(1)
         self.numOfWordsLabel = QtWidgets.QLabel(self.centralwidget)
-        self.numOfWordsLabel.setObjectName(u"numOfWordsLabel")
+        self.numOfWordsLabel.setObjectName("numOfWordsLabel")
         self.numOfWordsLabel.setGeometry(QtCore.QRect(90, 260, 101, 20))
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -98,6 +101,7 @@ class Ui_MainWindow(object):
         self.chooseClassLabel.setText(_translate("MainWindow", "Choose class"))
         self.loginButton.setText(_translate("MainWindow", "Login"))
         self.trainButton.setText(_translate("MainWindow", "Train"))
+        self.trainPercentButton.setText(_translate("MainWindow", "Train %"))
         self.workButton.setText(_translate("MainWindow", "Work"))
         self.goButton.setText(_translate("MainWindow", "Go"))
         self.chooseButton.setText(_translate("MainWindow","Choose"))
@@ -124,7 +128,7 @@ class Ui_MainWindow(object):
     def doIt(self):
         if self.loggedIn and self.choosingBaliks:
             if self.trainButton.isChecked():
-                train(self.baliks, self.chooseClassBox.currentIndex(), f"{self.chooseClassBox.currentText()}.txt")
+                train_balik(self.baliks, self.chooseClassBox.currentIndex(), f"{self.chooseClassBox.currentText()}.txt")
             elif self.workButton.isChecked():
                 work(self.baliks, self.chooseClassBox.currentIndex(), f"{self.chooseClassBox.currentText()}.txt", self.numOfWords.value())
 
