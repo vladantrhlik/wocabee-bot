@@ -3,8 +3,8 @@ from selenium import webdriver
 import time
 from selenium.webdriver.common.action_chains import ActionChains
 
-nick = "ahavlicek4"
-pwd = "wertojenej"
+nick = ""
+pwd = ""
 
 driver = webdriver.Firefox()
 driver.get('https://wocabee.app/app/?lang=CZ')
@@ -145,7 +145,7 @@ def do_the_hard_stuff(times,file): #řešení úkolů
         time.sleep(wait_time)
 
 def work(baliky,balik,file,how_many_times): #nahánění slovíček
-    actions.move_to_element(baliky[balik].find_elements_by_tag_name('td')[3].find_element_by_tag_name("a")).perform()
+    #baliky[balik].find_elements_by_tag_name('td')[3].find_element_by_tag_name("a").scrollIntoView()
     baliky[balik].find_elements_by_tag_name('td')[3].find_element_by_tag_name("a").click()
     do_the_hard_stuff(how_many_times,file)
     driver.find_element_by_id("backBtn").click()

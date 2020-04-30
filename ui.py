@@ -108,7 +108,10 @@ class Ui_MainWindow(object):
         self.numOfWordsLabel.setText(_translate("MainWindow", u"How many words", None))
 
     def WBlogin(self):
-        login(self.nickForm.text(), self.passwordForm.text())
+        try:
+            login(self.nickForm.text(), self.passwordForm.text())
+        except:
+            pass
         time.sleep(1)
         self.classes = loadClasses()
         self.chooseClassBox.addItems([i.text for i in self.classes])
