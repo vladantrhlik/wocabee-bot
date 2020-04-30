@@ -3,8 +3,8 @@ from selenium import webdriver
 import time
 from selenium.webdriver.common.action_chains import ActionChains
 
-nick = "ahavlicek4"
-pwd = "wertojenej"
+nick = ""
+pwd = ""
 
 driver = webdriver.Firefox()
 driver.get('https://wocabee.app/app/?lang=CZ')
