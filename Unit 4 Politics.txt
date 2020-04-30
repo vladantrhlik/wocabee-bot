@@ -1,0 +1,20 @@
+koalice;coalition
+volební systém;electoral system
+volební obvod;constituency
+všeobecné volby;general elections
+kandidát;candidate
+spustit kampaò;launch a campaign
+levicový;left - wing
+pravicový;right - wing
+petice;petition
+zaujmout stanovisko;take a stand
+vládní politika;government policy
+demonstrace;demonstration
+vliv;influence
+názor veøejnosti;public opinion
+široká veøejnost;general public
+podepsat petici;sign a petition
+politická strana;political party
+politik;politician
+politika;politics
+poslanec;member of parliament

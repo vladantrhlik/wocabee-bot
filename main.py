@@ -5,7 +5,7 @@ import time
 nick = ""
 pwd = ""
 
-driver = webdriver.Chrome()
+driver = webdriver.Opera()
 driver.get('https://wocabee.app/app/?lang=CZ')
 
 trida = ""
@@ -16,29 +16,29 @@ balik = ""
 def line(): print("="*40)
 
 def login(nickname,password):
-	
-	print("přihlašování...")
-	login_nick = driver.find_element_by_id("login")
-	login_nick.send_keys(nickname)
-	login_pwd = driver.find_element_by_id("password")
-	login_pwd.send_keys(password)
-	login_btn = driver.find_element_by_id("submitBtn")
-	login_btn.click()
-	print("přihlášeno")
+    
+    print("přihlašování...")
+    login_nick = driver.find_element_by_id("login")
+    login_nick.send_keys(nickname)
+    login_pwd = driver.find_element_by_id("password")
+    login_pwd.send_keys(password)
+    login_btn = driver.find_element_by_id("submitBtn")
+    login_btn.click()
+    print("přihlášeno")
 
 def loadClasses():
-	classes = []
+    classes = []
 
-	content_blocks = driver.find_elements_by_id("listOfClasses")
+    content_blocks = driver.find_elements_by_id("listOfClasses")
 
-	for block in content_blocks:
-	    elements = block.find_elements_by_tag_name("a")
-	    for el in elements:
-	        classes.append(el)
-	return classes
+    for block in content_blocks:
+        elements = block.find_elements_by_tag_name("a")
+        for el in elements:
+            classes.append(el)
+    return classes
 
 def loadBaliks():
-	return driver.find_elements_by_class_name("packageTableRow")
+    return driver.find_elements_by_class_name("packageTableRow")
 
 def train(baliky,balik,file): #načtení slovíček do .txt souboru
 	slovicka = []
@@ -64,10 +64,10 @@ def translate(word,file): #přeložení slova z jednoho jazyka do druhého
 	for i in range(len(words)):
 		words[i] = words[i].split(";")
 
-	#print(words)
-	for i in words:
-		if(i[0] == word): return i[1]
-		if(i[1] == word): return i[0]
+    #print(words)
+    for i in words:
+        if(i[0] == word): return i[1]
+        if(i[1] == word): return i[0]
 
 def do_the_hard_stuff(times,file): #řešení úkolů
 	types = ["transcribe","translateWord", "chooseWord", "findPair", "completeWord", "translateFallingWord"]
@@ -190,7 +190,8 @@ time.sleep(1)
 #výběr třídy
 classes = loadClasses()
 print("nalezené třidy:")
-for i in classes: print(f"{classes.index(i)+1}  {i.text}")#get_attribute('href'))
+for i in classes:
+    print(f"{classes.index(i)+1}  {i.text}")#get_attribute('href'))
 selected_class = int(input(f"vyberte třídu (1-{len(classes)}): "))
 trida = classes[selected_class-1].text
 classes[selected_class-1].find_element_by_tag_name("button").click()
@@ -200,7 +201,8 @@ line()
 baliky = loadBaliks()
 print("nalezené balíky: ")
 baliky = driver.find_elements_by_class_name("packageTableRow")
-for i in baliky: print(f"{baliky.index(i)+1}  {i.find_elements_by_tag_name('td')[0].text}")
+for i in baliky:
+    print(f"{baliky.index(i)+1}  {i.find_elements_by_tag_name('td')[0].text}")
 
 selected_balik = int(input(f"vyberte balík (1-{len(baliky)}): "))
 balik = baliky[selected_balik-1].find_elements_by_tag_name('td')[0].text
