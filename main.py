@@ -2,24 +2,37 @@ import selenium
 from selenium import webdriver
 import time
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 nick = ""
 pwd = ""
 
-driver = webdriver.Firefox()
-driver.get('https://wocabee.app/app/?lang=CZ')
-actions = ActionChains(driver)
-
-
 trida = ""
 balik = ""
 
-
+driver = None
 
 def line(): print("="*40)
 
+def chooseBrowser(browser):
+    global driver
+    if browser == "Chrome":
+        driver = webdriver.Chrome()
+    elif browser == "Firefox":
+        driver = webdriver.Firefox()
+    elif browser == "IE":
+        driver = webdriver.Ie()
+    elif browser == "Opera":
+        driver = webdriver.Opera()
+    elif browser == "Safari":
+        driver == webdriver.Safari()
+    driver.get('https://wocabee.app/app/?lang=CZ')
+    actions = ActionChains(driver)
+
 def login(nickname,password):
-    
+    global driver
     print("přihlašování...")
     login_nick = driver.find_element_by_id("login")
     login_nick.send_keys(nickname)
@@ -28,6 +41,9 @@ def login(nickname,password):
     login_btn = driver.find_element_by_id("submitBtn")
     login_btn.click()
     print("přihlášeno")
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, "logoutBtn"))
+    )
 
 def loadClasses():
     classes = []
@@ -186,6 +202,8 @@ def complete_balik(baliky,balik,file): #dokončit balík včetně naučení slov
     
 
 if __name__ == "__main__":
+    chooseBrowser(input("Jaký prohlížeč? (přesně: Chrome, Firefox, Opera, IE, Safari)"))
+
     login(nick,pwd)
     line()
     time.sleep(2)

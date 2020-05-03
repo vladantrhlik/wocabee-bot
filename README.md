@@ -1,11 +1,10 @@
-# wocabee-bot
+# WocabeeBot
 Simple python bot for wocabee web app
 
 ## Setup
 * Installation of selenium: https://selenium-python.readthedocs.io/installation.html#drivers
-* In `main.py` change `driver = webdriver.Opera()` to what browser you are using eg. `driver = webdriver.Chrome()`
 
-<hr>
+---
 
 ## Usage
 1. Run `ui.py`
