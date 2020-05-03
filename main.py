@@ -5,9 +5,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
-nick = ""
-pwd = ""
+from getpass import getpass
 
 trida = ""
 balik = ""
@@ -202,7 +200,10 @@ def complete_balik(baliky,balik,file): #dokončit balík včetně naučení slov
     
 
 if __name__ == "__main__":
-    chooseBrowser(input("Jaký prohlížeč? (přesně: Chrome, Firefox, Opera, IE, Safari)"))
+    chooseBrowser(input("Jaký prohlížeč? (přesně: Chrome, Firefox, Opera, IE, Safari) "))
+
+    nick = input("Přihlašovací jméno: ")
+    pwd = getpass("Heslo: ")
 
     login(nick,pwd)
     line()
