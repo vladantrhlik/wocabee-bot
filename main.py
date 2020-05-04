@@ -81,7 +81,7 @@ def translate(word,file): #přeložení slova z jednoho jazyka do druhého
     for i in range(len(words)):
         words[i] = words[i].split(";")
 
-    #print(words)
+    print(word)
     for i in words:
         if(i[0] == word): return i[1]
         if(i[1] == word): return i[0]
