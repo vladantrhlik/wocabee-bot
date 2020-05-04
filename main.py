@@ -94,7 +94,10 @@ def translate(word,file): #přeložení slova z jednoho jazyka do druhého
 def do_the_hard_stuff(times,file): #řešení úkolů
     types = ["transcribe","translateWord", "chooseWord", "findPair", "completeWord", "translateFallingWord"]
     form = driver.find_element_by_id("mainForm")
+    correctBtn = form.find_element_by_id("correct")
     for owo in range(times):
+        while correctBtn.get_attribute("style") != "display: none;":
+            pass
         type = ""
         #hledání typu ůkolu podle toho jestli mají style: display: none;, nebo ne
         for i in types:
@@ -160,8 +163,6 @@ def do_the_hard_stuff(times,file): #řešení úkolů
             word = translate(word,file)
             t.find_element_by_id("translateFallingWordAnswer").send_keys(word)
             t.find_element_by_id("translateFallingWordSubmitBtn").click()
-        #vyčkání až se načte trapně pomalý přechod
-        time.sleep(wait_time)
 
 def work(baliky,balik,file,how_many_times): #nahánění slovíček
     #baliky[balik].find_elements_by_tag_name('td')[3].find_element_by_tag_name("a").scrollIntoView()
