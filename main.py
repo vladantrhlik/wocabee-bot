@@ -55,12 +55,17 @@ def loadClasses():
     return classes
 
 def loadBaliks():
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "packageTableRow"))
+    )
     return driver.find_elements_by_class_name("packageTableRow")
 
 def train(baliky,balik,file): #načtení slovíček do .txt souboru
     slovicka = []
     preklad = []
-    time.sleep(1)
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, "word"))
+    )
     for i in range(int(driver.find_element_by_id("wordCount").text)-1):
         slovicka.append(driver.find_element_by_id("word").text)
         preklad.append(driver.find_element_by_id("translation").text)
