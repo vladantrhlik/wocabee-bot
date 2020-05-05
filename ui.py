@@ -15,24 +15,24 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(261, 449)
+        MainWindow.resize(261, 210)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.nickForm = QtWidgets.QLineEdit(self.centralwidget)
-        self.nickForm.setGeometry(QtCore.QRect(20, 110, 211, 21))
+        self.nickForm.setGeometry(QtCore.QRect(20, 45, 211, 21))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.nickForm.setFont(font)
         self.nickForm.setText("")
         self.nickForm.setObjectName("nickForm")
         self.nickLabel = QtWidgets.QLabel(self.centralwidget)
-        self.nickLabel.setGeometry(QtCore.QRect(20, 75, 211, 31))
+        self.nickLabel.setGeometry(QtCore.QRect(20, 10, 211, 31))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.nickLabel.setFont(font)
         self.nickLabel.setObjectName("nickLabel")
         self.passwordForm = QtWidgets.QLineEdit(self.centralwidget)
-        self.passwordForm.setGeometry(QtCore.QRect(20, 170, 211, 21))
+        self.passwordForm.setGeometry(QtCore.QRect(20, 105, 211, 21))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.passwordForm.setFont(font)
@@ -40,43 +40,43 @@ class Ui_MainWindow(object):
         self.passwordForm.setEchoMode(QtWidgets.QLineEdit.Password)
         self.passwordForm.setObjectName("passwordForm")
         self.passwordLabel = QtWidgets.QLabel(self.centralwidget)
-        self.passwordLabel.setGeometry(QtCore.QRect(20, 135, 211, 31))
+        self.passwordLabel.setGeometry(QtCore.QRect(20, 70, 211, 31))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.passwordLabel.setFont(font)
         self.passwordLabel.setObjectName("passwordLabel")
         self.chooseClassBox = QtWidgets.QComboBox(self.centralwidget)
-        self.chooseClassBox.setGeometry(QtCore.QRect(20, 290, 201, 22))
+        self.chooseClassBox.setGeometry(QtCore.QRect(20, 50, 201, 22))
         self.chooseClassBox.setObjectName("chooseClassBox")
         self.chooseClassLabel = QtWidgets.QLabel(self.centralwidget)
-        self.chooseClassLabel.setGeometry(QtCore.QRect(20, 250, 201, 31))
+        self.chooseClassLabel.setGeometry(QtCore.QRect(20, 10, 201, 31))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.chooseClassLabel.setFont(font)
         self.chooseClassLabel.setObjectName("chooseClassLabel")
         self.loginButton = QtWidgets.QPushButton(self.centralwidget)
-        self.loginButton.setGeometry(QtCore.QRect(20, 210, 75, 23))
+        self.loginButton.setGeometry(QtCore.QRect(20, 145, 75, 23))
         self.loginButton.setCheckable(False)
         self.loginButton.setObjectName("loginButton")
         self.trainButton = QtWidgets.QRadioButton(self.centralwidget)
-        self.trainButton.setGeometry(QtCore.QRect(30, 370, 51, 17))
+        self.trainButton.setGeometry(QtCore.QRect(30, 90, 51, 17))
         self.trainButton.setObjectName("trainButton")
         self.workButton = QtWidgets.QRadioButton(self.centralwidget)
-        self.workButton.setGeometry(QtCore.QRect(100, 370, 51, 17))
+        self.workButton.setGeometry(QtCore.QRect(100, 90, 51, 17))
         self.workButton.setObjectName("workButton")
         self.goButton = QtWidgets.QPushButton(self.centralwidget)
-        self.goButton.setGeometry(QtCore.QRect(70, 400, 75, 23))
+        self.goButton.setGeometry(QtCore.QRect(70, 160, 75, 23))
         self.goButton.setObjectName("goButton")
         self.chooseButton = QtWidgets.QPushButton(self.centralwidget)
-        self.chooseButton.setGeometry(QtCore.QRect(10, 330, 75, 23))
+        self.chooseButton.setGeometry(QtCore.QRect(10, 90, 75, 23))
         self.chooseButton.setObjectName("chooseButton")
         self.numOfWords = QtWidgets.QSpinBox(self.centralwidget)
-        self.numOfWords.setGeometry(QtCore.QRect(200, 330, 42, 22))
+        self.numOfWords.setGeometry(QtCore.QRect(200, 130, 42, 22))
         self.numOfWords.setMinimum(1)
         self.numOfWords.setMaximum(10000)
         self.numOfWords.setObjectName("numOfWords")
         self.numOfWordsLabel = QtWidgets.QLabel(self.centralwidget)
-        self.numOfWordsLabel.setGeometry(QtCore.QRect(90, 330, 101, 20))
+        self.numOfWordsLabel.setGeometry(QtCore.QRect(90, 130, 101, 20))
         self.numOfWordsLabel.setObjectName("numOfWordsLabel")
         self.chooseBrowserButton = QtWidgets.QPushButton(self.centralwidget)
         self.chooseBrowserButton.setGeometry(QtCore.QRect(160, 30, 91, 23))
@@ -85,7 +85,7 @@ class Ui_MainWindow(object):
         self.chooseBrowserBox.setGeometry(QtCore.QRect(20, 30, 131, 22))
         self.chooseBrowserBox.setObjectName("chooseBrowserBox")
         self.workPercentButton = QtWidgets.QRadioButton(self.centralwidget)
-        self.workPercentButton.setGeometry(QtCore.QRect(160, 370, 71, 17))
+        self.workPercentButton.setGeometry(QtCore.QRect(160, 90, 71, 17))
         self.workPercentButton.setObjectName("workPercentButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -96,6 +96,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.chooseBrowserButton.clicked.connect(lambda:self.WBchooseBrowser())
+        self.workButton.toggled.connect(lambda:self.toggleNumOfWords())
 
         self.loggedIn = False
         self.choosingClasses = False
@@ -103,6 +104,13 @@ class Ui_MainWindow(object):
         self.chooseButton.clicked.connect(lambda:self.choose())
         self.goButton.clicked.connect(lambda:self.doIt())
         self.chooseBrowserBox.addItems(["Chrome","Firefox","Opera","IE","Safari"])
+
+        for i in [self.nickLabel, self.nickForm, self.passwordLabel, self.passwordForm, self.loginButton]:
+            i.setVisible(False)
+        for i in [self.chooseClassLabel, self.chooseClassBox, self.chooseButton]:
+            i.setVisible(False)
+        for i in [self.workButton, self.trainButton, self.workPercentButton, self.goButton, self.numOfWordsLabel, self.numOfWords]:
+            i.setVisible(False)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -121,16 +129,25 @@ class Ui_MainWindow(object):
 
     def WBchooseBrowser(self):
         chooseBrowser(self.chooseBrowserBox.currentText())
+        for i in [self.chooseBrowserBox, self.chooseBrowserButton]:
+            i.setVisible(False)
+        for i in [self.nickLabel, self.nickForm, self.passwordLabel, self.passwordForm, self.loginButton]:
+            i.setVisible(True)
 
     def WBlogin(self):
         try:
             login(self.nickForm.text(), self.passwordForm.text())
+            self.loggedIn = True
+            for i in [self.nickLabel, self.nickForm, self.passwordLabel, self.passwordForm, self.loginButton]:
+                i.setVisible(False)
+            for i in [self.chooseClassLabel, self.chooseClassBox, self.chooseButton]:
+                i.setVisible(True)
         except:
             pass
         time.sleep(1)
         self.classes = loadClasses()
         self.chooseClassBox.addItems([i.text for i in self.classes])
-        self.loggedIn = True
+
 
     def choose(self):
         if self.loggedIn:
@@ -140,6 +157,9 @@ class Ui_MainWindow(object):
             self.chooseClassBox.clear()
             self.chooseClassBox.addItems([i.find_elements_by_tag_name('td')[0].text for i in self.baliks])
             self.chooseClassLabel.setText("Choose balík")
+            self.chooseButton.setVisible(False)
+            for i in [self.workButton, self.trainButton, self.workPercentButton, self.goButton]:
+                i.setVisible(True)
 
     def doIt(self):
         if self.loggedIn and self.choosingBaliks:
@@ -149,6 +169,14 @@ class Ui_MainWindow(object):
                 work(self.baliks, self.chooseClassBox.currentIndex(), f"{self.chooseClassBox.currentText()}.txt", self.numOfWords.value())
             elif self.workPercentButton.isChecked():
                 work_percent(self.baliks, self.chooseClassBox.currentIndex, f"{self.chooseClassBox.currentText()}.txt")
+
+    def toggleNumOfWords(self):
+        if self.workButton.isChecked():
+            for i in [self.numOfWords, self.numOfWordsLabel]:
+                i.setVisible(True)
+        else:
+            for i in [self.numOfWords, self.numOfWordsLabel]:
+                i.setVisible(False)
 
 if __name__ == "__main__":
     import sys
