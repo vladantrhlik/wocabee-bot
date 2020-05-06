@@ -11,6 +11,15 @@ from main import login, train_balik, work, work_percent, loadBaliks, loadClasses
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import sys, os
+
+# Disable
+def blockPrint():
+    sys.stdout = open(os.devnull, 'w')
+
+# Restore
+def enablePrint():
+    sys.stdout = sys.__stdout__
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -103,7 +112,7 @@ class Ui_MainWindow(object):
         self.loginButton.clicked.connect(lambda:self.WBlogin())
         self.chooseButton.clicked.connect(lambda:self.choose())
         self.goButton.clicked.connect(lambda:self.doIt())
-        self.chooseBrowserBox.addItems(["Chrome","Firefox","Opera","IE","Safari"])
+        self.chooseBrowserBox.addItems(["Chrome","Firefox","Opera","IE", "Edge","Safari"])
 
         for i in [self.nickLabel, self.nickForm, self.passwordLabel, self.passwordForm, self.loginButton]:
             i.setVisible(False)
@@ -179,6 +188,7 @@ class Ui_MainWindow(object):
                 i.setVisible(False)
 
 if __name__ == "__main__":
+    blockPrint()
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()

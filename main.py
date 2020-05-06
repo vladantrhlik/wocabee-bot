@@ -1,3 +1,4 @@
+import os
 import selenium
 from selenium import webdriver
 import time
@@ -6,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from getpass import getpass
+from webdriver_manager import firefox, microsoft, chrome, opera
 
 trida = ""
 balik = ""
@@ -17,13 +19,40 @@ def line(): print("="*40)
 def chooseBrowser(browser):
     global driver
     if browser == "Chrome":
-        driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        if __name__ != "__main__":
+            options.add_argument("--headless")
+            options.add_argument("--log-level=3")
+            options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Chrome(executable_path=chrome.ChromeDriverManager().install(), options=options)
     elif browser == "Firefox":
-        driver = webdriver.Firefox()
+        options = webdriver.ChromeOptions()
+        if __name__ != "__main__":
+            options.add_argument("--headless")
+            options.add_argument("--log-level=3")
+            options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Firefox(executable_path=firefox.GeckoDriverManager().install())
     elif browser == "IE":
-        driver = webdriver.Ie()
+        options = webdriver.ChromeOptions()
+        if __name__ != "__main__":
+            options.add_argument("--headless")
+            options.add_argument("--log-level=3")
+            options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Ie(executable_path=microsoft.IEDriverManager().install())
     elif browser == "Opera":
-        driver = webdriver.Opera()
+        options = webdriver.ChromeOptions()
+        if __name__ != "__main__":
+            options.add_argument("--headless")
+            options.add_argument("--log-level=3")
+            options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Opera(executable_path=opera.OperaDriverManager().install(), options=options, service_log_path=os.devnull)
+    elif browser == "Edge":
+        options = webdriver.ChromeOptions()
+        if __name__ != "__main__":
+            options.add_argument("--headless")
+            options.add_argument("--log-level=3")
+            options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        driver = webdriver.Edge(executable_path=microsoft.EdgeChromiumDriverManager().install())
     elif browser == "Safari":
         driver == webdriver.Safari()
     driver.get('https://wocabee.app/app/?lang=CZ')
@@ -31,14 +60,14 @@ def chooseBrowser(browser):
 
 def login(nickname,password):
     global driver
-    print("přihlašování...")
+    #print("přihlašování...")
     login_nick = driver.find_element_by_id("login")
     login_nick.send_keys(nickname)
     login_pwd = driver.find_element_by_id("password")
     login_pwd.send_keys(password)
     login_btn = driver.find_element_by_id("submitBtn")
     login_btn.click()
-    print("přihlášeno")
+    #print("přihlášeno")
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "logoutBtn"))
     )
@@ -86,7 +115,7 @@ def translate(word,file): #přeložení slova z jednoho jazyka do druhého
     for i in range(len(words)):
         words[i] = words[i].split(";")
 
-    print(word)
+    #print(word)
     for i in words:
         if(i[0] == word): return i[1]
         if(i[1] == word): return i[0]
@@ -105,7 +134,7 @@ def do_the_hard_stuff(times,file): #řešení úkolů
             #print(f"type:{i} style: {t.get_attribute('style')}")
             if t.get_attribute('style') != "display: none;": 
                 type = i
-        print(type)
+        #print(type)
         t = form.find_element_by_id(type)
         wait_time = 4
         #řešení jedntlivých ůkolú
@@ -206,7 +235,7 @@ def complete_balik(baliky,balik,file): #dokončit balík včetně naučení slov
     
 
 if __name__ == "__main__":
-    chooseBrowser(input("Jaký prohlížeč? (přesně: Chrome, Firefox, Opera, IE, Safari) "))
+    chooseBrowser(input("Jaký prohlížeč? (přesně: Chrome, Firefox, Opera, IE, Edge, Safari) "))
 
     nick = input("Přihlašovací jméno: ")
     pwd = getpass("Heslo: ")

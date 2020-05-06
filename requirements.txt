@@ -5,3 +5,6 @@ PyQt5_sip == 12.7.2
 
 # D:\Python\wocabee-bot\main.py: 1,2,4,5,6,7
 selenium == 3.141.0
+
+# D:\Python\wocabee-bot\main.py: 9
+webdriver_manager == 2.4.0
