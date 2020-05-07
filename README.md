@@ -1,3 +1,5 @@
+![Github Total Release Downloads](https://img.shields.io/github/downloads/vladantrhlik/wocabee-bot/total?color=%2311CC11&style=for-the-badge)
+
 # WocabeeBot
 Simple python bot for wocabee web app
 
