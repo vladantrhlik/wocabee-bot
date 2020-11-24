@@ -95,6 +95,8 @@ def train(baliky,balik,file): #načtení slovíček do .txt souboru
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "word"))
     )
+
+    time.sleep(1)
     for i in range(int(driver.find_element_by_id("wordCount").text)-1):
         slovicka.append(driver.find_element_by_id("word").text)
         preklad.append(driver.find_element_by_id("translation").text)
